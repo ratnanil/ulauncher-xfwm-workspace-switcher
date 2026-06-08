@@ -53,7 +53,7 @@ class KeywordQueryEventListener(EventListener):
         id = tmp.split()[0]
         # Extract the workspace name
         name = ""
-        m = re.search("^.*WA: (N/A|.,. \d+x\d+) *", tmp)
+        m = re.search(r"^.*WA: (N/A|[^,]+,[^ ]+ \d+x\d+) *", tmp)
         if m and m.span():
             name = tmp[m.span()[1] :]
 
@@ -85,7 +85,7 @@ class KeywordQueryEventListener(EventListener):
         """Get list of all workspaces"""
         result = subprocess.run(
             [
-                "wmctrl -d | sed -n -E -e 's/^.*WA: (N\/A|.,. [[:digit:]]+x[[:digit:]]+)  //p'"
+                "wmctrl -d | sed -n -E -e 's/^.*WA: (N\\/A|[^,]+,[^ ]+ [[:digit:]]+x[[:digit:]]+)  //p'"
             ],
             capture_output=True,
             shell=True,
